@@ -1,0 +1,51 @@
+version: '3.8.0'
+name: 'web-scrape-app'
+services:
+  chrome_srvc:
+    build:
+      context: ./chrome_image
+      dockerfile: Dockerfile
+    container_name: sel-chrome
+    environment:
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+      - SE_NODE_MAX_SESSIONS=4
+    env_file:
+      - .env
+    ports:
+      - "7900:7900"  # Expose noVNC port for debugging
+    volumes:
+      - chrome-shm:/dev/shm
+      - chrome-data:/home/seluser/.config/google-chrome
+      - shared-files:/home/seluser/Downloads:z  #Shared folder 
+
+  php_srvc:
+    build:
+      context: ./php_image
+      dockerfile: Dockerfile
+    container_name: sel-php
+    env_file:
+      - .env
+    ports:
+      - "80:80"  # Expose HTTP port
+    volumes:
+      - shared-files:/var/www/html/filesfolder:z  #Shared folder 
+
+  mysql_srvc:
+    build:
+      context: ./mysql_image
+      dockerfile: Dockerfile
+    container_name: sel-mysql
+    env_file:
+      - .env
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
+    driver: local
+  chrome-data:
+    driver: local
+  chrome-shm:
+    driver: local
+  shared-files:
+    driver: local
