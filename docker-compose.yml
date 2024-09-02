@@ -14,7 +14,7 @@ services:
     ports:
       - "7900:7900"  # Expose noVNC port for debugging
     volumes:
-      - chrome-shm:/dev/shm
+      - ./dev/shm:/dev/shm
       - chrome-data:/home/seluser/.config/google-chrome
       - shared-files:/home/seluser/Downloads:z  #Shared folder 
 
@@ -26,7 +26,7 @@ services:
     env_file:
       - .env
     ports:
-      - "80:80"  # Expose HTTP port
+      - "85:80"  # Expose HTTP port
     volumes:
       - shared-files:/var/www/html/filesfolder:z  #Shared folder 
 
@@ -44,8 +44,6 @@ volumes:
   mysql-data:
     driver: local
   chrome-data:
-    driver: local
-  chrome-shm:
     driver: local
   shared-files:
     driver: local
