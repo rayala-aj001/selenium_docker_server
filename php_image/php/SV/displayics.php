@@ -1,5 +1,6 @@
 <?php
 include '../../selenium/mysql_var.php';
+$tablename = basename(dirname(dirname(__FILE__)));
 
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Methods: GET");
@@ -13,7 +14,7 @@ if(!empty($_GET['id'])){
     }
     
     //Get the image from the database
-    $res = $db->query("SELECT ics FROM Calendar_WM_a WHERE file_name = '".htmlspecialchars($_GET['id'])."'");
+    $res = $db->query("SELECT ics FROM Calendar_{$tablename} WHERE file_name = '".htmlspecialchars($_GET['id'])."'");
     
     if($res->num_rows > 0){
         $blob = $res->fetch_assoc();

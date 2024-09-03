@@ -7,6 +7,7 @@ header("Access-Control-Allow-Methods: POST");
 $fileName = $_POST["fileName"];
 $file = $_FILES['calBlob']['tmp_name'];
 $blob = addslashes(file_get_contents($file));
+$tablename = basename(dirname(dirname(__FILE__)));
 
 echo $fileName;
 echo $blob;
@@ -20,7 +21,7 @@ if($db->connect_error){
 };
 
 //Insert the blob into the database
-$query = $db->query("REPLACE INTO Calendar_WM_a (file_name, ics) VALUES ('{$fileName}','{$blob}')");
+$query = $db->query("REPLACE INTO Calendar_{$tablename} (file_name, ics) VALUES ('{$fileName}','{$blob}')");
 if($query){
 	echo "File uploaded successfully.";
 }else{
