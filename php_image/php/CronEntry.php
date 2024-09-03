@@ -26,7 +26,7 @@ function isValidCronJob($cron_job) {
 
     // Validate the cron schedule check if the first five parts are numbers, asterisks, or ranges
     foreach (array_slice($parts, 0, 5) as $part) {
-        if (!preg_match('/^(\*|\d+|\d+\-\d+|\/\d+)$/', $part)) {
+        if (!preg_match('/^(\*|\d+|\d+\-\d+|\/\d+|\*\/\d+)$/', $part)) {
             return false;
         }
     }
