@@ -1,6 +1,6 @@
 <?php
 include '../../selenium/mysql_var.php';
-$tablename = basename(dirname(dirname(__FILE__)));
+$tablename = basename(dirname(__FILE__));
 
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Methods: GET");

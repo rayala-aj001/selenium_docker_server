@@ -3,7 +3,7 @@ session_start();
 include '../../selenium/mysql_var.php';
 $currentUri = $_SERVER['REQUEST_URI'];
 $urlloc = str_replace('listofName.php', 'displayics.php?id=', $currentUri);
-$tablename = basename(dirname(dirname(__FILE__)));
+$tablename = basename(dirname(__FILE__));
 
 // Define your password here
 $correct_password =  $_ENV['SE_VNC_PASSWORD'];

@@ -7,7 +7,7 @@ header("Access-Control-Allow-Methods: POST");
 $fileName = $_POST["fileName"];
 $file = $_FILES['calBlob']['tmp_name'];
 $blob = addslashes(file_get_contents($file));
-$tablename = basename(dirname(dirname(__FILE__)));
+$tablename = basename(dirname(__FILE__));
 
 echo $fileName;
 echo $blob;
