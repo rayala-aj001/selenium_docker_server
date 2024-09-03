@@ -22,8 +22,8 @@ services:
       - SE_NODE_MAX_SESSIONS=4
     env_file:
       - .env
-    ports:
-      - 7900:7900 # Expose noVNC port 7900 for debugging if needed
+    #ports:
+    #  - 7900:7900 # Expose noVNC port 7900 for debugging if needed
     volumes:
       - chrome-data:/home/seluser/.config/google-chrome #chrome profile and site cookies
       - shared-files:/home/seluser/Downloads:z  #Shared folder 
@@ -38,8 +38,8 @@ services:
       - MYSQL_DATA_HOST=sel-mysql
     env_file:
       - .env
-    ports:
-      - 85:80 # Expose HTTP port 80 if needed
+    #ports:
+    #  - 85:80 # Expose HTTP port 80 if needed
     volumes:
       - shared-files:/var/www/html/filesfolder:z  #Shared folder 
 
