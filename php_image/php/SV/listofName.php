@@ -2,7 +2,8 @@
 session_start();
 include '../../selenium/mysql_var.php';
 $currentUri = $_SERVER['REQUEST_URI'];
-$urlloc = str_replace('listofName.php', 'displayics.php?id=', $currentUri);
+$servername = $_SERVER['SERVER_NAME'];
+$urlloc = str_replace('listofName.php', 'displayics.php?id=', 'https://' .$servername . $currentUri);
 $tablename = basename(dirname(__FILE__));
 
 // Define your password here
