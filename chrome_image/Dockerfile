@@ -7,8 +7,6 @@ RUN for i in $(seq 1 4); do \
         chown -R seluser:seluser /home/seluser/.config/google-chrome/worker$i; \
     done
 
-RUN mkdir -p /home/seluser/Downloads && chown -R seluser:seluser /home/seluser/Downloads
-
 # Set the working directory
 WORKDIR /usr/src/app
 

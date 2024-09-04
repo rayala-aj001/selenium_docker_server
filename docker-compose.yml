@@ -20,6 +20,7 @@ services:
     environment:
       - SE_NODE_OVERRIDE_MAX_SESSIONS=true
       - SE_NODE_MAX_SESSIONS=4
+      - SEL_DOWNLOAD_DIR=/home/seluser/Downloads
     env_file:
       - .env
     #ports:

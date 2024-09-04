@@ -36,7 +36,7 @@ function isValidCronJob($cron_job) {
 
 function getCurrentCrontab() {
     $output = [];
-    exec('crontab -l', $output, $return_var);
+    exec('sudo crontab -l', $output, $return_var);
     if ($return_var === 1) {
         return []; // No crontab set
     }
@@ -46,7 +46,7 @@ function getCurrentCrontab() {
 function saveCrontab($crontab) {
     $tmp_file = tempnam(sys_get_temp_dir(), 'crontab');
     file_put_contents($tmp_file, implode(PHP_EOL, $crontab) . PHP_EOL);
-    exec("crontab $tmp_file");
+    exec("sudo crontab $tmp_file");
     unlink($tmp_file);
 }
 

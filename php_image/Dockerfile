@@ -9,7 +9,7 @@ RUN docker-php-ext-enable mysqli
 
 #Install Steps for selenium
 RUN apt update
-RUN apt install -y npm=7.5.2+ds-2 cron nano
+RUN apt install -y npm=7.5.2+ds-2 cron nano sudo
 RUN npm install -g n@9.2.3 && n latest && hash -r
 RUN npm install -g selenium-side-runner@4.0.12
 
@@ -23,14 +23,15 @@ RUN chmod -R 755 /var/www/selenium
 RUN chown -R www-data:www-data /var/www/selenium/
 
 #Setup Command ShortCuts
-RUN echo 'nohup selenium-side-runner -w 10 --server http://${SE_CHROME_HOST}:4444/wd/hub -T 6000000 -t 6000000 -r 1 -c "goog:chromeOptions.args=[start-maximized, disable-dev-shm-usage, user-data-dir=/home/seluser/.config/google-chrome, profile-directory=worker1] browserName=chrome" /var/www/selenium/SV.side > /var/www/html/sv_run.log 2>&1' >> /bin/sv_run && chmod +x /bin/sv_run
-RUN echo 'nohup selenium-side-runner -w 10 --server http://${SE_CHROME_HOST}:4444/wd/hub -T 6000000 -t 6000000 -r 1 -c "goog:chromeOptions.args=[start-maximized, disable-dev-shm-usage, user-data-dir=/home/seluser/.config/google-chrome, profile-directory=worker2] browserName=chrome" /var/www/selenium/W1.side > /var/www/html/w1_run.log 2>&1' >> /bin/w1_run && chmod +x /bin/w1_run
-RUN echo 'nohup selenium-side-runner -w 10 --server http://${SE_CHROME_HOST}:4444/wd/hub -T 6000000 -t 6000000 -r 1 -c "goog:chromeOptions.args=[start-maximized, disable-dev-shm-usage, user-data-dir=/home/seluser/.config/google-chrome, profile-directory=worker3] browserName=chrome" /var/www/selenium/W2.side > /var/www/html/w2_run.log 2>&1' >> /bin/w2_run && chmod +x /bin/w2_run
-RUN echo 'nohup selenium-side-runner -w 10 --server http://${SE_CHROME_HOST}:4444/wd/hub -T 6000000 -t 6000000 -r 1 -c "goog:chromeOptions.args=[start-maximized, disable-dev-shm-usage, user-data-dir=/home/seluser/.config/google-chrome, profile-directory=worker4] browserName=chrome" /var/www/selenium/W3.side > /var/www/html/w3_run.log 2>&1' >> /bin/w3_run && chmod +x /bin/w3_run
+RUN echo 'nohup /usr/local/bin/selenium-side-runner -w 10 --server http://${SE_CHROME_HOST}:4444/wd/hub -T 6000000 -t 6000000 -r 1 -c "goog:chromeOptions.args=[start-maximized, disable-dev-shm-usage, user-data-dir=/home/seluser/.config/google-chrome, profile-directory=worker1] browserName=chrome" /var/www/selenium/SV.side > /var/www/html/sv_run.log 2>&1' > /bin/sv_run && chmod 0744 /bin/sv_run
+RUN echo 'nohup /usr/local/bin/selenium-side-runner -w 10 --server http://${SE_CHROME_HOST}:4444/wd/hub -T 6000000 -t 6000000 -r 1 -c "goog:chromeOptions.args=[start-maximized, disable-dev-shm-usage, user-data-dir=/home/seluser/.config/google-chrome, profile-directory=worker2] browserName=chrome" /var/www/selenium/W1.side > /var/www/html/w1_run.log 2>&1' > /bin/w1_run && chmod 0744 /bin/w1_run
+RUN echo 'nohup /usr/local/bin/selenium-side-runner -w 10 --server http://${SE_CHROME_HOST}:4444/wd/hub -T 6000000 -t 6000000 -r 1 -c "goog:chromeOptions.args=[start-maximized, disable-dev-shm-usage, user-data-dir=/home/seluser/.config/google-chrome, profile-directory=worker3] browserName=chrome" /var/www/selenium/W2.side > /var/www/html/w2_run.log 2>&1' > /bin/w2_run && chmod 0744 /bin/w2_run
+RUN echo 'nohup /usr/local/bin/selenium-side-runner -w 10 --server http://${SE_CHROME_HOST}:4444/wd/hub -T 6000000 -t 6000000 -r 1 -c "goog:chromeOptions.args=[start-maximized, disable-dev-shm-usage, user-data-dir=/home/seluser/.config/google-chrome, profile-directory=worker4] browserName=chrome" /var/www/selenium/W3.side > /var/www/html/w3_run.log 2>&1' > /bin/w3_run && chmod 0744 /bin/w3_run
 RUN echo 'cron && apache2-foreground' >> /bin/srvc_start && chmod +x /bin/srvc_start
 
 # Setup cron job
 RUN (crontab -l -u www-data; echo "0 */5 * * * sv_run") | crontab -u www-data -
+RUN sed '/root\sALL=(ALL:ALL)\sALL/a www-data ALL=(ALL) NOPASSWD: /usr/bin/crontab' /etc/sudoers -i
 
 # Set the working directory
 WORKDIR /var/www/html
