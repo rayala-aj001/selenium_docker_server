@@ -1,5 +1,14 @@
 FROM php:8.3-apache-bullseye
 
+# Setup ENV for php
+ENV SE_CHROME_ARGS="goog:chromeOptions.args=[start-maximized, disable-dev-shm-usage, no-sandbox, user-data-dir=/home/seluser/.config/google-chrome, profile-directory=worker1] browserName=chrome"
+ENV MYSQL_DATA_HOST=sel-mysql 
+ENV SE_CHROME_HOST1=sel-chrome1
+ENV SE_CHROME_HOST2=sel-chrome2
+ENV SE_CHROME_HOST3=sel-chrome3
+ENV SE_CHROME_HOST4=sel-chrome4
+
+
 # Install your extensions to connect to MySQL, add mysqli
 RUN docker-php-ext-install mysqli
 # Install pdo is you need to use PHP PDO
@@ -34,8 +43,7 @@ RUN echo 'nohup /usr/local/bin/selenium-side-runner --server http://${SE_CHROME_
 
 # Setup cron job
 RUN (crontab -l ; echo "PATH=${PATH}") | crontab -
-RUN (crontab -l ; echo 'SE_CHROME_ARGS=${SE_CHROME_ARGS}') | crontab -
-    
+RUN (crontab -l ; echo "SE_CHROME_ARGS=${SE_CHROME_ARGS}") | crontab -
 RUN (crontab -l ; echo "SE_CHROME_HOST1=${SE_CHROME_HOST1}") | crontab -
 RUN (crontab -l ; echo "SE_CHROME_HOST2=${SE_CHROME_HOST2}") | crontab -
 RUN (crontab -l ; echo "SE_CHROME_HOST3=${SE_CHROME_HOST3}") | crontab -

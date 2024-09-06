@@ -85,15 +85,6 @@ services:
       context: ./php_image
       dockerfile: Dockerfile
     container_name: sel-php
-    environment:
-      - MYSQL_DATA_HOST=sel-mysql
-      - SE_CHROME_ARGS="goog:chromeOptions.args=[start-maximized, disable-dev-shm-usage, no-sandbox, user-data-dir=/home/seluser/.config/google-chrome, profile-directory=worker1] browserName=chrome"
-      
-      - SE_CHROME_HOST1=sel-chrome1
-      - SE_CHROME_HOST2=sel-chrome2
-      - SE_CHROME_HOST3=sel-chrome3
-      - SE_CHROME_HOST4=sel-chrome4
-
     env_file:
       - .env
     #ports:

@@ -23,8 +23,8 @@ web log files
 
 The container has 4 chrome image since this setup will require 4 selenium side files to run and its expected that each runtime will overlap.
 Refer to the files below:
-1. /docker-compose.yml  - image, volume and PHP image envirolment
-2. /php_image/Dockerfile - Setup Command ShortCuts, Setup cron job
+1. /docker-compose.yml  - image, volume
+2. /php_image/Dockerfile - Setup Command ShortCuts, Setup cron job, Setup ENV for php
 
 note: Each chrome image has 4 concurrent session, to be able to maximixe it put all web automation in 1 side file
         read more: https://www.selenium.dev/selenium-ide/docs/en/introduction/command-line-runner#test-parallelization-in-a-suite
