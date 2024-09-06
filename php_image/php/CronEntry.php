@@ -7,7 +7,7 @@ $correct_password =  $_ENV['SE_VNC_PASSWORD'];
 
 // Helper functions for crontab operations
 function isValidCronJob($cron_job) {
-    $allowed_commands = ['sv_run', 'w1_run', 'w2_run', 'w3_run'];
+    $allowed_commands = ['sv_run', 'w1_run', 'w2_run', 'w3_run', 'sw_run'];
     // Split the cron job into parts
     $parts = preg_split('/\s+/', $cron_job);
     

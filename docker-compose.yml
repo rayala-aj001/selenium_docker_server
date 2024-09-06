@@ -12,11 +12,11 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql #Datebase storage
 
-  chrome_srvc:
+  chrome1_srvc:
     build:
       context: ./chrome_image
       dockerfile: Dockerfile
-    container_name: sel-chrome
+    container_name: sel-chrome1
     environment:
       - SE_NODE_OVERRIDE_MAX_SESSIONS=true
       - SE_NODE_MAX_SESSIONS=4
@@ -26,7 +26,58 @@ services:
     #ports:
     #  - 7900:7900 # Expose noVNC port 7900 for debugging if needed
     volumes:
-      - chrome-data:/home/seluser/.config/google-chrome #chrome profile and site cookies
+      - chrome-data1:/home/seluser/.config/google-chrome #chrome profile and site cookies
+      - shared-files:/home/seluser/Downloads:z  #Shared folder 
+
+  chrome2_srvc:
+    build:
+      context: ./chrome_image
+      dockerfile: Dockerfile
+    container_name: sel-chrome2
+    environment:
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+      - SE_NODE_MAX_SESSIONS=4
+      - SEL_DOWNLOAD_DIR=/home/seluser/Downloads
+    env_file:
+      - .env
+    #ports:
+    #  - 7900:7900 # Expose noVNC port 7900 for debugging if needed
+    volumes:
+      - chrome-data2:/home/seluser/.config/google-chrome #chrome profile and site cookies
+      - shared-files:/home/seluser/Downloads:z  #Shared folder 
+
+  chrome3_srvc:
+    build:
+      context: ./chrome_image
+      dockerfile: Dockerfile
+    container_name: sel-chrome3
+    environment:
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+      - SE_NODE_MAX_SESSIONS=4
+      - SEL_DOWNLOAD_DIR=/home/seluser/Downloads
+    env_file:
+      - .env
+    #ports:
+    #  - 7900:7900 # Expose noVNC port 7900 for debugging if needed
+    volumes:
+      - chrome-data3:/home/seluser/.config/google-chrome #chrome profile and site cookies
+      - shared-files:/home/seluser/Downloads:z  #Shared folder      
+
+  chrome4_srvc:
+    build:
+      context: ./chrome_image
+      dockerfile: Dockerfile
+    container_name: sel-chrome4
+    environment:
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+      - SE_NODE_MAX_SESSIONS=4
+      - SEL_DOWNLOAD_DIR=/home/seluser/Downloads
+    env_file:
+      - .env
+    #ports:
+    #  - 7900:7900 # Expose noVNC port 7900 for debugging if needed
+    volumes:
+      - chrome-data4:/home/seluser/.config/google-chrome #chrome profile and site cookies
       - shared-files:/home/seluser/Downloads:z  #Shared folder 
 
   php_srvc:
@@ -35,8 +86,14 @@ services:
       dockerfile: Dockerfile
     container_name: sel-php
     environment:
-      - SE_CHROME_HOST=sel-chrome
       - MYSQL_DATA_HOST=sel-mysql
+      - SE_CHROME_ARGS="goog:chromeOptions.args=[start-maximized, disable-dev-shm-usage, no-sandbox, user-data-dir=/home/seluser/.config/google-chrome, profile-directory=worker1] browserName=chrome"
+      
+      - SE_CHROME_HOST1=sel-chrome1
+      - SE_CHROME_HOST2=sel-chrome2
+      - SE_CHROME_HOST3=sel-chrome3
+      - SE_CHROME_HOST4=sel-chrome4
+
     env_file:
       - .env
     #ports:
@@ -47,7 +104,14 @@ services:
 volumes:
   mysql-data:
     driver: local
-  chrome-data:
-    driver: local
   shared-files:
+    driver: local
+
+  chrome-data1:
+    driver: local
+  chrome-data2:
+    driver: local
+  chrome-data3:
+    driver: local
+  chrome-data4:
     driver: local
