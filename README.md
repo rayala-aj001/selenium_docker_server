@@ -30,8 +30,8 @@ note: Each chrome image has 4 concurrent session, to be able to maximixe it put 
         read more: https://www.selenium.dev/selenium-ide/docs/en/introduction/command-line-runner#test-parallelization-in-a-suite
 
 To remove long running session on chrome image
-1. cURL GET 'http://localhost:4444/status'  - to get sessions
-2. cURL --request DELETE 'http://localhost:4444/session/<session-id>'  - to kill the session
+1. curl -v --silent http://${SE_CHROME_HOST1}:4444/status 2>&1 | grep sessionId - to get sessions
+2. curl --request DELETE 'http://${SE_CHROME_HOST1}:4444/session/<sessionId>'  - to kill the session
 read more: https://www.selenium.dev/documentation/grid/advanced_features/endpoints/
 
 Adhoc Line

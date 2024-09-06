@@ -33,13 +33,10 @@ RUN chown -R www-data:www-data /var/www/selenium/
 
 #Setup Command ShortCuts
 RUN echo 'cron && apache2-foreground' >> /bin/srvc_start && chmod +x /bin/srvc_start
-RUN echo 'nohup /usr/local/bin/selenium-side-runner --server http://${SE_CHROME_HOST1}:4444/wd/hub -T 6000000 -t 6000000 -r 1 -c ${SE_CHROME_ARGS} /var/www/selenium/SV.side > /var/www/html/sv_run.log 2>&1 &' > /bin/sv_run && chmod 0744 /bin/sv_run
-RUN echo 'nohup /usr/local/bin/selenium-side-runner --server http://${SE_CHROME_HOST2}:4444/wd/hub -T 6000000 -t 6000000 -r 1 -c ${SE_CHROME_ARGS} /var/www/selenium/W1.side > /var/www/html/w1_run.log 2>&1 &' > /bin/w1_run && chmod 0744 /bin/w1_run
-RUN echo 'nohup /usr/local/bin/selenium-side-runner --server http://${SE_CHROME_HOST3}:4444/wd/hub -T 6000000 -t 6000000 -r 1 -c ${SE_CHROME_ARGS} /var/www/selenium/W2.side > /var/www/html/w2_run.log 2>&1 &' > /bin/w2_run && chmod 0744 /bin/w2_run
-RUN echo 'nohup /usr/local/bin/selenium-side-runner --server http://${SE_CHROME_HOST4}:4444/wd/hub -T 6000000 -t 6000000 -r 1 -c ${SE_CHROME_ARGS} /var/www/selenium/W3.side > /var/www/html/w3_run.log 2>&1 &' > /bin/w3_run && chmod 0744 /bin/w3_run
-
-#for parallel test
-RUN echo 'nohup /usr/local/bin/selenium-side-runner --server http://${SE_CHROME_HOST1}:4444/wd/hub -T 6000000 -t 6000000 -r 1 -c ${SE_CHROME_ARGS} /var/www/selenium/SW.side > /var/www/html/sw_run.log 2>&1 &' > /bin/sw_run && chmod 0744 /bin/sw_run
+RUN echo 'nohup /usr/local/bin/selenium-side-runner --server http://${SE_CHROME_HOST1}:4444/wd/hub -T 6000000 -t 6000000 -r 1 -c "${SE_CHROME_ARGS}" /var/www/selenium/SV.side > /var/www/html/sv_run.log 2>&1 &' > /bin/sv_run && chmod 0744 /bin/sv_run
+RUN echo 'nohup /usr/local/bin/selenium-side-runner --server http://${SE_CHROME_HOST2}:4444/wd/hub -T 6000000 -t 6000000 -r 1 -c "${SE_CHROME_ARGS}" /var/www/selenium/W1.side > /var/www/html/w1_run.log 2>&1 &' > /bin/w1_run && chmod 0744 /bin/w1_run
+RUN echo 'nohup /usr/local/bin/selenium-side-runner --server http://${SE_CHROME_HOST3}:4444/wd/hub -T 6000000 -t 6000000 -r 1 -c "${SE_CHROME_ARGS}" /var/www/selenium/W2.side > /var/www/html/w2_run.log 2>&1 &' > /bin/w2_run && chmod 0744 /bin/w2_run
+RUN echo 'nohup /usr/local/bin/selenium-side-runner --server http://${SE_CHROME_HOST4}:4444/wd/hub -T 6000000 -t 6000000 -r 1 -c "${SE_CHROME_ARGS}" /var/www/selenium/W3.side > /var/www/html/w3_run.log 2>&1 &' > /bin/w3_run && chmod 0744 /bin/w3_run
 
 # Setup cron job
 RUN (crontab -l ; echo "PATH=${PATH}") | crontab -
